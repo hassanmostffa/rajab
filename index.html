@@ -60,26 +60,59 @@
           </section>
         </div>
 
-        <section id="audio" class="audio-section card">
-          <h2>صوتيات</h2>
-          <div class="audio-player">
-            <p>دعاء شهر رجب</p>
-            <audio controls>
-              <source src="" type="audio/mpeg">
-              المتصفح لا يدعم تشغيل الصوت.
-            </audio>
-          </div>
-        </section>
-
-        <section id="about-section" class="about-section card">
-          <!-- About Content -->
-        </section>
+        <!-- Audio Section Removed - Replaced by Sticky Player -->
       </main>
     </div>
 
     <footer class="app-footer">
       <p>&copy; ١٤٤٦ هـ | نفحات رجبية</p>
     </footer>
+
+    <div id="sticky-audio-player" class="sticky-audio-player">
+      <div class="audio-player-container">
+        <!-- Visualizer Canvas -->
+        <canvas id="audio-visualizer"></canvas>
+
+        <!-- Pattern Background -->
+        <div class="islamic-pattern"></div>
+
+        <div class="player-controls-new">
+          <div class="track-info-new">
+            <h3 id="track-title">يا مَنْ أَرْجُوهُ لِكُلِّ خَيْرٍ</h3>
+            <p id="reciter-name">أباذر الحلواجي</p>
+          </div>
+
+          <audio id="main-audio" src="https://shiavoice.com/save-k8v7z.mp3" preload="metadata"></audio>
+
+          <div class="buttons-new">
+            <button id="sleep-timer-btn" class="icon-btn" aria-label="مؤقت النوم" title="مؤقت النوم">🌙</button>
+            <button id="playlist-toggle-new" class="icon-btn" aria-label="قائمة الأدعية">📋</button>
+            <button id="play-btn" class="play-btn-large">▶</button>
+          </div>
+
+          <!-- Sleep Timer Menu -->
+          <div id="sleep-timer-menu" class="timer-menu hidden">
+            <button data-time="15">15 دقيقة</button>
+            <button data-time="30">30 دقيقة</button>
+            <button data-time="0">إلغاء</button>
+          </div>
+
+          <div class="progress-container">
+            <span id="current-time">0:00</span>
+            <div class="progress-bar-wrapper" id="progress-wrapper">
+              <div class="progress-bar" id="progress"></div>
+            </div>
+            <span id="duration">0:00</span>
+          </div>
+
+          <div id="timer-display" class="timer-display hidden"></div>
+        </div>
+      </div>
+
+      <div id="playlist-menu" class="playlist-menu hidden">
+        <!-- Playlist items injected via JS -->
+      </div>
+    </div>
   </div>
   <script type="module" src="/src/main.js"></script>
 </body>
