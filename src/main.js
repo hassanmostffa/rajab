@@ -434,7 +434,7 @@ function updateToggleIcon(theme) {
 
 // Initialize Features
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Rajab App Initialized');
+  console.log('Rajab App Initialized - v1.1 White Days & About');
   initTheme();
   initDeedOfTheDay();
   initDuas();
