@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+    rel="stylesheet">
+  <title>Month of Rajab | شهر رجب</title>
+</head>
+
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="header-content">
+        <h1>شهر رجب الأصب</h1>
+        <p class="subtitle">شهر الله العظيم</p>
+      </div>
+      <button id="theme-toggle" class="theme-toggle" aria-label="تغيير الوضع">
+        🌙
+      </button>
+    </header>
+
+    <div class="layout-container">
+      <aside class="sidebar">
+        <h2>تواريخ مهمة</h2>
+        <div id="dates-list" class="dates-list">
+          <!-- Dates will be injected here -->
+        </div>
+      </aside>
+
+      <main class="main-content">
+        <section id="hero" class="hero-section card">
+          <h2>عمل اليوم</h2>
+          <div id="deed-display">جاري التحميل...</div>
+        </section>
+
+        <div class="features-grid">
+          <section id="duas" class="duas-section card">
+            <h2>أدعية يومية</h2>
+            <div id="duas-list">
+              <!-- Duas list -->
+            </div>
+          </section>
+
+          <section id="tasbih" class="tasbih-section card">
+            <h2>المسبحة الإلكترونية</h2>
+            <div class="tasbih-wrapper">
+              <div id="tasbih-count" class="tasbih-display">0</div>
+              <button id="tasbih-btn" class="btn-primary">سبحان الله</button>
+              <button id="tasbih-reset" class="btn-text">تصفير</button>
+            </div>
+          </section>
+        </div>
+
+        <section id="audio" class="audio-section card">
+          <h2>صوتيات</h2>
+          <div class="audio-player">
+            <p>دعاء شهر رجب</p>
+            <audio controls>
+              <source src="" type="audio/mpeg">
+              المتصفح لا يدعم تشغيل الصوت.
+            </audio>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="app-footer">
+      <p>&copy; ١٤٤٦ هـ | نفحات رجبية</p>
+    </footer>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
