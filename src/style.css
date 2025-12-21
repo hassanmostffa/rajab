@@ -450,3 +450,81 @@ h2 {
 [data-theme="light"] .arabic-sm {
   background: rgba(0, 0, 0, 0.05);
 }
+
+/* White Days Card */
+.white-days-card {
+  background: linear-gradient(135deg, var(--color-background) 0%, var(--color-gold) 200%);
+  border: 2px solid var(--color-gold);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+}
+
+.white-days-card.hidden {
+  display: none;
+}
+
+.white-days-card h3 {
+  color: var(--color-gold);
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.white-days-status {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.white-days-card.active {
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+  }
+}
+
+/* About Section */
+.about-section {
+  color: var(--color-text-muted);
+}
+
+.about-dedication {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+  font-style: italic;
+  text-align: center;
+  color: var(--color-gold);
+}
+
+.sources-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.source-tag {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  border: 1px solid var(--color-border);
+}
