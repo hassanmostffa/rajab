@@ -680,7 +680,10 @@ h2 {
 @media (max-width: 600px) {
   .modal-content {
     width: 95%;
-    max-height: 90vh;
+    max-height: 80vh;
+    /* Reduced from 90vh to be safer */
+    margin-top: 2rem;
+    /* Ensure space from top */
   }
 
   .modal-body {
