@@ -19,10 +19,18 @@
         <h1>شهر رجب الأصب</h1>
         <p class="subtitle">شهر الله العظيم</p>
       </div>
+      <nav class="main-nav">
+        <button class="nav-btn active" data-target="home">الرئيسية</button>
+        <button class="nav-btn" data-target="tasbih">المسبحة</button>
+        <button class="nav-btn" data-target="about">حول العمل</button>
+        <button class="nav-btn" data-target="contact">تواصل معنا</button>
+      </nav>
       <button id="theme-toggle" class="theme-toggle" aria-label="تغيير الوضع">
         🌙
       </button>
     </header>
+
+
 
     <div class="layout-container">
       <aside class="sidebar">
@@ -33,84 +41,91 @@
       </aside>
 
       <main class="main-content">
-        <section id="hero" class="hero-section card">
-          <h2>عمل اليوم</h2>
-          <div id="deed-display">جاري التحميل...</div>
-        </section>
-
-        <section id="white-days-card" class="white-days-card hidden">
-          <!-- White Days Content -->
-        </section>
-
-        <div class="features-grid">
-          <section id="duas" class="duas-section card">
-            <h2>أدعية يومية</h2>
-            <div id="duas-list">
-              <!-- Duas list -->
-            </div>
+        <!-- Home View -->
+        <div id="view-home" class="view-section active">
+          <section id="hero" class="hero-section card">
+            <h2>عمل اليوم</h2>
+            <div id="deed-display">جاري التحميل...</div>
           </section>
 
-          <section id="tasbih" class="tasbih-section card">
-            <h2>المسبحة الإلكترونية</h2>
-            <div class="tasbih-wrapper">
-              <div id="tasbih-count" class="tasbih-display">0</div>
-              <button id="tasbih-btn" class="btn-primary">سبحان الله</button>
-              <button id="tasbih-reset" class="btn-text">تصفير</button>
+          <section id="white-days-card" class="white-days-card hidden">
+            <!-- White Days Content -->
+          </section>
+
+          <section id="duas" class="duas-section">
+            <h2>أدعية وأعمال يومية</h2>
+
+            <!-- Category Filters -->
+            <div class="duas-filters">
+              <button class="filter-btn active" data-filter="all">الكل</button>
+              <button class="filter-btn" data-filter="general_deeds">أعمال عامة</button>
+              <button class="filter-btn" data-filter="daily_duas">أدعية يومية</button>
+              <button class="filter-btn" data-filter="special_occasions">مناسبات خاصة</button>
+              <button class="filter-btn" data-filter="ziyarat">زيارات</button>
+            </div>
+
+            <div id="duas-list" class="duas-grid-container">
+              <!-- Duas will be injected here -->
             </div>
           </section>
         </div>
 
-        <!-- Audio Section Removed - Replaced by Sticky Player -->
+        <!-- Tasbih View -->
+        <div id="view-tasbih" class="view-section">
+          <section id="tasbih" class="tasbih-section card centered-card">
+            <h2>المسبحة الإلكترونية</h2>
+            <div class="tasbih-wrapper">
+              <div class="tasbih-monitor">
+                <div id="tasbih-count" class="tasbih-display">0</div>
+                <span class="tasbih-label">ذكر الله</span>
+              </div>
+              <button id="tasbih-btn" class="tasbih-btn-main" aria-label="سبحان الله"></button>
+              <button id="tasbih-reset" class="btn-text">تصفير العداد</button>
+            </div>
+          </section>
+        </div>
+
+        <!-- About View -->
+        <div id="view-about" class="view-section">
+          <section id="about-section" class="about-section card">
+            <!-- Populated by JS -->
+          </section>
+        </div>
+
+        <!-- Contact View -->
+        <div id="view-contact" class="view-section">
+          <section class="contact-section card">
+            <h2>تواصل معنا</h2>
+            <p>للملاحظات والاستفسارات، يرجى التواصل عبر البريد الإلكتروني:</p>
+            <a href="mailto:contact@rajab-app.com" class="contact-link">hassanmostffa@gmail.com</a>
+
+            <div class="social-links" style="margin-top: 2rem;">
+              <p>نسألكم الدعاء</p>
+            </div>
+          </section>
+        </div>
+
       </main>
     </div>
 
     <footer class="app-footer">
       <p>&copy; ١٤٤٦ هـ | نفحات رجبية</p>
+      <p class="dedication-text">هذا العمل صدقة جارية لروح الوالد السيد حسن احمد البطاط (رحمه الله)</p>
     </footer>
 
-    <div id="sticky-audio-player" class="sticky-audio-player">
-      <div class="audio-player-container">
-        <!-- Visualizer Canvas -->
-        <canvas id="audio-visualizer"></canvas>
-
-        <!-- Pattern Background -->
-        <div class="islamic-pattern"></div>
-
-        <div class="player-controls-new">
-          <div class="track-info-new">
-            <h3 id="track-title">يا مَنْ أَرْجُوهُ لِكُلِّ خَيْرٍ</h3>
-            <p id="reciter-name">أباذر الحلواجي</p>
+    <!-- Dua Reading Modal -->
+    <div id="dua-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modal-title">عنوان الدعاء</h2>
+          <div class="modal-actions">
+            <button id="copy-dua-btn" class="btn-icon" aria-label="نسخ النص">📋</button>
+            <button id="close-modal" class="close-btn">&times;</button>
           </div>
-
-          <audio id="main-audio" src="https://shiavoice.com/save-k8v7z.mp3" preload="metadata"></audio>
-
-          <div class="buttons-new">
-            <button id="sleep-timer-btn" class="icon-btn" aria-label="مؤقت النوم" title="مؤقت النوم">🌙</button>
-            <button id="playlist-toggle-new" class="icon-btn" aria-label="قائمة الأدعية">📋</button>
-            <button id="play-btn" class="play-btn-large">▶</button>
-          </div>
-
-          <!-- Sleep Timer Menu -->
-          <div id="sleep-timer-menu" class="timer-menu hidden">
-            <button data-time="15">15 دقيقة</button>
-            <button data-time="30">30 دقيقة</button>
-            <button data-time="0">إلغاء</button>
-          </div>
-
-          <div class="progress-container">
-            <span id="current-time">0:00</span>
-            <div class="progress-bar-wrapper" id="progress-wrapper">
-              <div class="progress-bar" id="progress"></div>
-            </div>
-            <span id="duration">0:00</span>
-          </div>
-
-          <div id="timer-display" class="timer-display hidden"></div>
         </div>
-      </div>
-
-      <div id="playlist-menu" class="playlist-menu hidden">
-        <!-- Playlist items injected via JS -->
+        <div class="modal-body">
+          <p id="modal-text" class="arabic-text">نص الدعاء...</p>
+        </div>
       </div>
     </div>
   </div>

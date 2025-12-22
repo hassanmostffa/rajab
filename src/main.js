@@ -1,5 +1,6 @@
 // Main application entry point
 import './style.css'
+import { duasContent } from './content.js';
 
 // Data populated from user JSON
 const appData = {
@@ -22,7 +23,7 @@ const appData = {
         "author": "العلامة المجلسي (قده)"
       }
     ],
-    "dedication": "هذا العمل صدقة جارية، نسألكم الدعاء لوالدينا ولجميع المؤمنين والمؤمنات."
+    "dedication": "هذا العمل صدقة جاريةلوالدي السيد حسن احمد البطاط (رحمه الله)، نسألكم الدعاء لوالدينا ولجميع المؤمنين والمؤمنات."
   },
   "general_deeds": [
     {
@@ -45,8 +46,8 @@ const appData = {
       "date": "ليلة الجمعة الأولى",
       "title": "ليلة الرغائب",
       "deeds": [
-        "صيام يوم الخميس الأول من رجب",
-        "الصلاة المخصصة بين العشائين (12 ركعة)"
+        { "text": "صيام يوم الخميس الأول من رجب", "key": "laylat_raghaib" },
+        { "text": "الصلاة المخصصة بين العشائين (12 ركعة)", "key": "laylat_raghaib" }
       ]
     },
     {
@@ -54,24 +55,27 @@ const appData = {
       "date": "13 رجب",
       "title": "ولادة أمير المؤمنين (ع)",
       "deeds": [
-        "زيارة أمير المؤمنين عليه السلام",
-        "صوم الأيام البيض (13، 14، 15)"
+        { "text": "زيارة أمير المؤمنين عليه السلام", "key": "ziyarat_rajab_general" },
+        { "text": "صوم الأيام البيض (13، 14، 15)", "key": "white_days" }
       ]
     },
     {
       "day": 25,
       "date": "25 رجب",
       "title": "استشهاد الإمام الكاظم (ع)",
-      "deeds": ["الزيارة", "الصلاة"]
+      "deeds": [
+        { "text": "زيارة الإمام الكاظم (ع)", "key": "day_25_kadhim" },
+        { "text": "الصلاة وزيارة العتبات", "key": null }
+      ]
     },
     {
       "day": 27,
       "date": "27 رجب",
       "title": "عيد المبعث النبوي الشريف",
       "deeds": [
-        "الغسل",
-        "الصيام (وهو أحد الأيام الأربعة التي يترجح صيامها في السنة)",
-        "زيارة النبي صلى الله عليه وآله"
+        { "text": "الغسل", "key": "mabath_day" },
+        { "text": "الصيام (وهو أحد الأيام الأربعة)", "key": "mabath_day" },
+        { "text": "زيارة النبي (ص) وأمير المؤمنين (ع)", "key": "mabath_day" }
       ]
     }
   ],
@@ -114,13 +118,7 @@ const appData = {
       }
     ]
   },
-  "audio_tracks": [
-    {
-      "id": "user_selected_track",
-      "title": "المقطع الصوتي المختار",
-      "url": "https://shiavoice.com/save-Is0iM.mp3"
-    }
-  ]
+
 };
 
 const dailyDeeds = [
@@ -148,45 +146,168 @@ function initDeedOfTheDay() {
   }
 }
 
-// Feature: Daily Duas
+// Feature: Daily Duas & Deeds List (Categorized)
+
+// Navigation Logic
+function initNavigation() {
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const views = document.querySelectorAll('.view-section');
+
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update Nav
+      navBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update View
+      const target = btn.dataset.target;
+      views.forEach(view => {
+        view.classList.remove('active');
+        if (view.id === `view-${target}`) {
+          view.classList.add('active');
+        }
+      });
+    });
+  });
+}
+
+// Modal Logic - Exposed Globally
+window.openDua = (key) => {
+  const content = duasContent[key];
+  if (!content) return;
+
+  const modal = document.getElementById('dua-modal');
+  const title = document.getElementById('modal-title');
+  const text = document.getElementById('modal-text');
+
+  // Store text for copy
+  modal.dataset.currentText = content.text;
+
+  if (title) title.textContent = content.title;
+  if (text) text.innerHTML = content.text.replace(/\n/g, '<br>');
+
+  if (modal) modal.classList.remove('hidden');
+}
+
+// Close Modal & Copy Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('dua-modal');
+  const closeBtn = document.getElementById('close-modal');
+  const copyBtn = document.getElementById('copy-dua-btn');
+
+  if (closeBtn && modal) {
+    closeBtn.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.add('hidden');
+      }
+    });
+  }
+
+  // Copy Logic
+  if (copyBtn && modal) {
+    copyBtn.addEventListener('click', () => {
+      const text = modal.dataset.currentText;
+      if (text) {
+        navigator.clipboard.writeText(text).then(() => {
+          const original = copyBtn.textContent;
+          copyBtn.textContent = '✅';
+          setTimeout(() => copyBtn.textContent = original, 2000);
+        }).catch(err => console.error("Copy failed", err));
+      }
+    });
+  }
+});
+
+
 function initDuas() {
-  const duasList = document.getElementById('duas-list');
-  if (duasList) {
-    duasList.innerHTML = appData.general_deeds.map(dua => `
-      <div class="dua-item">
-        <div class="dua-header">
-          <h3>${dua.title}</h3>
-          <button class="copy-btn" data-copy-target="dua-content-${dua.id}" aria-label="نسخ النص">
-            <span class="icon">📋</span> نسخ
-          </button>
-        </div>
-        <p class="dua-description">${dua.description}</p>
-        <p id="dua-content-${dua.id}" class="arabic">${dua.content}</p>
-        ${dua.reward ? `<p class="dua-reward"><span class="label">الثواب:</span> ${dua.reward}</p>` : ''}
-      </div>
-    `).join('');
+  const container = document.getElementById('duas-list');
+  const filterBtns = document.querySelectorAll('.filter-btn');
 
-    // Attach event listeners for copy buttons
-    document.querySelectorAll('.copy-btn').forEach(btn => {
+  if (!container) return;
+
+  function render(filter = 'all') {
+    container.innerHTML = '';
+    container.style.opacity = '0'; // Fade out effect
+
+    setTimeout(() => {
+      // Group content by category
+      const categories = {
+        general_deeds: { title: "🌟 أعمال رجب العامة", items: [] },
+        daily_adhkar: { title: "📿 أذكار يومية", items: [] },
+        daily_duas: { title: "🤲 أدعية يومية", items: [] },
+        ziyarat: { title: "🕌 زيارات", items: [] },
+        special_occasions: { title: "🗓️ مناسبات خاصة", items: [] }
+      };
+
+      // Populate categories
+      Object.keys(duasContent).forEach(key => {
+        const item = { ...duasContent[key], key };
+        if (categories[item.category]) {
+          categories[item.category].items.push(item);
+        }
+      });
+
+      let html = '';
+
+      // Determine which categories to show
+      const catsToShow = filter === 'all'
+        ? Object.keys(categories)
+        : [filter];
+
+      if (filter !== 'all' && !categories[filter]) {
+        // Fallback or multiple categories mapping could go here
+      }
+
+      catsToShow.forEach(catKey => {
+        const cat = categories[catKey];
+        if (cat && cat.items.length > 0) {
+          // If filtering "all", show headers. If specific, maybe hide or show? Let's show for clarity.
+          html += `<h3 class="category-header">${cat.title}</h3>`;
+
+          cat.items.forEach(dua => {
+            const shortText = dua.text.substring(0, 120) + (dua.text.length > 120 ? '...' : '');
+            html += `
+              <div class="dua-card card" onclick="window.openDua('${dua.key}')">
+                <div class="dua-header">
+                  <h3>${dua.title}</h3>
+                  ${dua.timing ? `<span class="badge badge-timing">${dua.timing === 'night' ? '🌙 ليلة' : '☀️ يوم'} ${dua.day || ''}</span>` : ''}
+                </div>
+                <p class="dua-desc">${dua.desc}</p>
+                <div class="dua-preview arabic-sm">
+                  ${shortText}
+                </div>
+                <button class="btn-text">اقرأ المزيد &larr;</button>
+              </div>
+            `;
+          });
+        }
+      });
+
+      container.innerHTML = html;
+      container.style.opacity = '1'; // Fade in
+    }, 200);
+  }
+
+  // Event Listeners for Filters
+  if (filterBtns) {
+    filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const targetId = btn.getAttribute('data-copy-target');
-        const textToCopy = document.getElementById(targetId).textContent;
+        // Update active class
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          const originalText = btn.innerHTML;
-          btn.innerHTML = '<span class="icon">✅</span> تم النسخ';
-          btn.classList.add('copied');
-
-          setTimeout(() => {
-            btn.innerHTML = originalText;
-            btn.classList.remove('copied');
-          }, 2000);
-        }).catch(err => {
-          console.error('Failed to copy text: ', err);
-        });
+        // Render
+        render(btn.dataset.filter);
       });
     });
   }
+
+  // Initial Render
+  render('all');
 }
 
 // Feature: Tasbih Counter
@@ -217,11 +338,14 @@ function initTasbih() {
 }
 
 // Helper: Get Current Hijri Date
+// Adjusted for Sayyid al-Sistani (approx. -1 day from Umm al-Qura usually)
+const HIJRI_OFFSET = -1;
+
 function getHijriDate() {
   try {
     const date = new Date();
+    // Use standard calculation as base
     const options = { calendar: 'islamic-umalqura', day: 'numeric', month: 'numeric' };
-    // Force en-US to ensure Western Arabic digits (0-9) for parseInt
     const formatter = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura', options);
     const parts = formatter.formatToParts(date);
 
@@ -234,7 +358,22 @@ function getHijriDate() {
     });
 
     if (day > 0 && month > 0) {
-      return { day, month };
+      // Apply Offset
+      let newDay = day + HIJRI_OFFSET;
+
+      // Simple wrap-around logic (approximate for 30-day months)
+      // This is a basic approximation suitable for a client-side app without a full ephemeris
+      if (newDay <= 0) {
+        month -= 1;
+        if (month <= 0) month = 12;
+        newDay += 30; // Assume previous month was 30 days
+      } else if (newDay > 30) {
+        month += 1;
+        if (month > 12) month = 1;
+        newDay -= 30;
+      }
+
+      return { day: newDay, month };
     }
   } catch (e) {
     console.error("Hijri calculation failed, using fallback:", e);
@@ -335,7 +474,17 @@ function showDayDetails(day) {
         ${occasions.map(o => `
           <div class="detail-item">
             <strong>${o.title}</strong>
-            ${o.deeds ? `<ul class="date-deeds-list">${o.deeds.map(d => `<li>${d}</li>`).join('')}</ul>` : ''}
+            ${o.deeds ? `<ul class="date-deeds-list">
+              ${o.deeds.map(d => {
+      if (typeof d === 'string') return `<li>${d}</li>`;
+      const text = d.text || d;
+      const key = d.key;
+      if (key) {
+        return `<li class="clickable-deed" onclick="window.openDua('${key}')">${text}</li>`;
+      }
+      return `<li>${text}</li>`;
+    }).join('')}
+            </ul>` : ''}
           </div>
         `).join('')}
       </div>
@@ -403,7 +552,7 @@ function initWhiteDays() {
         <h3>🌕 الأيام البيض تقترب</h3>
         <p class="white-days-status">${daysText} على الأيام البيض (١٣، ١٤، ١٥ رجب)</p>
         <p>استعد لصيام هذه الأيام المباركة لما لها من فضل عظيم.</p>
-        <p class="date-badge" style="margin-top:0.5rem">اليوم: ${currentDay} رجب</p>
+        <p class="date-badge">اليوم: ${currentDay} رجب</p>
       `;
     whiteDaysCard.classList.remove('hidden');
   } else if (whiteDays.includes(currentDay)) {
@@ -429,7 +578,7 @@ function initAbout() {
   if (aboutSection && data) {
     aboutSection.innerHTML = `
       <h2>${data.title}</h2>
-      <p style="margin-bottom: 1rem; font-size: 1.1rem;">${data.description}</p>
+      <p class="about-description">${data.description}</p>
       
       <h3>📚 المصادر</h3>
       <ul class="sources-list">
@@ -446,235 +595,7 @@ function initAbout() {
 }
 
 // Feature: Persistent Audio Player - Premium Design
-function initPersistentAudio() {
-  const container = document.querySelector('.audio-player-container');
-  const audioElement = document.getElementById('main-audio');
-  const playBtn = document.getElementById('play-btn');
-  const trackTitle = document.getElementById('track-title');
-  const reciterName = document.getElementById('reciter-name');
-  const playlistBtn = document.getElementById('playlist-toggle-new');
-  const playlistMenu = document.getElementById('playlist-menu');
-  const progressBar = document.getElementById('progress');
-  const progressWrapper = document.getElementById('progress-wrapper');
-  const currentTimeEl = document.getElementById('current-time');
-  const durationEl = document.getElementById('duration');
 
-  // New Controls
-  const sleepTimerBtn = document.getElementById('sleep-timer-btn');
-  const sleepTimerMenu = document.getElementById('sleep-timer-menu');
-  const timerDisplay = document.getElementById('timer-display');
-  const canvas = document.getElementById('audio-visualizer');
-
-  if (!container || !audioElement || !playBtn) return;
-
-  // --- Audio Visualizer Setup ---
-  let audioContext, analyser, source, canvasCtx;
-  let animationId;
-
-  function initVisualizer() {
-    if (!audioContext) {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioContext = new AudioContext();
-      analyser = audioContext.createAnalyser();
-
-      // Connect audio element to analyser
-      try {
-        source = audioContext.createMediaElementSource(audioElement);
-        source.connect(analyser);
-        analyser.connect(audioContext.destination);
-      } catch (e) {
-        console.warn("CORS/AudioContext restricted, visualizer might be flat.", e);
-        // Fallback: visualizer won't move but audio plays.
-      }
-
-      analyser.fftSize = 64; // Low res for "waves"
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-
-      canvasCtx = canvas.getContext('2d');
-
-      function draw() {
-        animationId = requestAnimationFrame(draw);
-
-        const width = canvas.width;
-        const height = canvas.height;
-
-        analyser.getByteFrequencyData(dataArray);
-
-        canvasCtx.clearRect(0, 0, width, height);
-
-        const barWidth = (width / bufferLength) * 2.5;
-        let barHeight;
-        let x = 0;
-
-        for (let i = 0; i < bufferLength; i++) {
-          barHeight = dataArray[i] / 2;
-
-          const gradient = canvasCtx.createLinearGradient(0, height - barHeight, 0, height);
-          gradient.addColorStop(0, '#d4af37');
-          gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
-
-          canvasCtx.fillStyle = gradient;
-          canvasCtx.beginPath();
-          // Draw rounded bars or sine wave feel
-          canvasCtx.roundRect(x, height - barHeight, barWidth, barHeight, 5);
-          canvasCtx.fill();
-
-          x += barWidth + 1;
-        }
-      }
-
-      // Handle canvas resize
-      canvas.width = container.clientWidth;
-      canvas.height = 100;
-      draw();
-    }
-  }
-
-  // --- Sleep Timer Logic ---
-  let sleepTimerId = null;
-
-  sleepTimerBtn.addEventListener('click', () => {
-    sleepTimerMenu.classList.toggle('hidden');
-  });
-
-  sleepTimerMenu.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const minutes = parseInt(btn.dataset.time);
-
-      if (sleepTimerId) clearTimeout(sleepTimerId);
-      timerDisplay.classList.add('hidden');
-
-      if (minutes > 0) {
-        const ms = minutes * 60 * 1000;
-        const endTime = Date.now() + ms;
-
-        timerDisplay.textContent = `⏱️ إيقاف بعد ${minutes} د`;
-        timerDisplay.classList.remove('hidden');
-
-        sleepTimerId = setTimeout(() => {
-          pauseAudio();
-          timerDisplay.textContent = "💤 تم الإيقاف";
-          setTimeout(() => timerDisplay.classList.add('hidden'), 3000);
-        }, ms);
-      }
-
-      sleepTimerMenu.classList.add('hidden');
-    });
-  });
-
-
-  // --- Logic reused for Playlist & Playback ---
-  // Define Tracks (or use what's in appData if updated)
-  const tracks = appData.audio_tracks;
-  if (!tracks || tracks.length === 0) return;
-
-  // Initialize Playlist UI
-  playlistMenu.innerHTML = tracks.map((track, index) => `
-    <button class="playlist-item" data-index="${index}">
-      <span style="font-weight:bold">${track.title}</span>
-    </button>
-  `).join('');
-
-  let currentTrackIndex = 0;
-
-  function loadTrack(index) {
-    if (index < 0 || index >= tracks.length) return;
-    currentTrackIndex = index;
-    const track = tracks[index];
-
-    trackTitle.textContent = track.title;
-    // Hack: extract reciter
-    const titleParts = track.title.split('(');
-    if (titleParts.length > 1) {
-      trackTitle.textContent = titleParts[0].trim();
-      reciterName.textContent = titleParts[1].replace(')', '').trim();
-    } else {
-      reciterName.textContent = "القارئ";
-    }
-
-    audioElement.src = track.url;
-
-    document.querySelectorAll('.playlist-item').forEach(item => {
-      item.classList.toggle('active', parseInt(item.dataset.index) === index);
-    });
-
-    progressBar.style.width = '0%';
-    currentTimeEl.textContent = "0:00";
-    playBtn.textContent = '▶';
-    container.classList.remove('playing');
-  }
-
-  function togglePlay() {
-    // Need to initialize AudioContext on user gesture
-    if (!audioContext) initVisualizer();
-    if (audioContext && audioContext.state === 'suspended') audioContext.resume();
-
-    if (audioElement.paused) {
-      audioElement.play().then(() => {
-        playBtn.textContent = '⏸';
-        playBtn.style.paddingRight = '0'; // Center adjustment
-        container.classList.add('playing'); // Start rotation
-      }).catch(error => {
-        console.error("Play failed:", error);
-      });
-    } else {
-      pauseAudio();
-    }
-  }
-
-  function pauseAudio() {
-    audioElement.pause();
-    playBtn.textContent = '▶';
-    playBtn.style.paddingRight = '4px';
-    container.classList.remove('playing'); // Stop rotation
-  }
-
-  playBtn.addEventListener('click', togglePlay);
-
-  playlistBtn.addEventListener('click', () => {
-    playlistMenu.classList.toggle('hidden');
-  });
-
-  document.querySelectorAll('.playlist-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const index = parseInt(item.dataset.index);
-      loadTrack(index);
-      setTimeout(() => togglePlay(), 500);
-      playlistMenu.classList.add('hidden');
-    });
-  });
-
-  audioElement.addEventListener('timeupdate', () => {
-    const { currentTime, duration } = audioElement;
-    if (duration) {
-      const progressPercent = (currentTime / duration) * 100;
-      progressBar.style.width = `${progressPercent}%`;
-      currentTimeEl.textContent = formatTime(currentTime);
-      durationEl.textContent = formatTime(duration);
-    }
-  });
-
-  progressWrapper.addEventListener('click', (e) => {
-    const width = progressWrapper.clientWidth;
-    const clickX = e.offsetX;
-    const duration = audioElement.duration;
-    if (duration) {
-      audioElement.currentTime = (clickX / width) * duration;
-    }
-  });
-
-  // Format Time Helper
-  function formatTime(seconds) {
-    if (isNaN(seconds)) return "0:00";
-    const min = Math.floor(seconds / 60);
-    const sec = Math.floor(seconds % 60);
-    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
-  }
-
-  // Initial Load
-  loadTrack(0);
-}
 
 // Feature: Theme Toggle
 function initTheme() {
@@ -725,5 +646,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initDates();
   initWhiteDays();
   initAbout();
-  initPersistentAudio();
+  initNavigation();
+
 });
