@@ -61,9 +61,15 @@ body {
   align-items: start;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .layout-container {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .sidebar {
+    order: -1;
+    /* Show sidebar on top or maybe keep it below? Let's keep normally but maybe collapsible? For now just stacked. */
   }
 }
 
@@ -198,6 +204,17 @@ body {
   font-size: 2.5rem;
   color: var(--color-gold);
   margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .app-header {
+    padding: 1rem 0;
+  }
 }
 
 .subtitle {
@@ -414,13 +431,14 @@ h2 {
 /* Main Grid for Duas */
 .duas-grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
 @media (max-width: 600px) {
   .duas-grid-container {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 
@@ -656,6 +674,22 @@ h2 {
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .arabic-text {
+    font-size: 1.3rem;
+    line-height: 2;
   }
 }
 

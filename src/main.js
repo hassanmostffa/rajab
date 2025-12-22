@@ -594,7 +594,7 @@ function initAbout() {
   }
 }
 
-// Feature: Persistent Audio Player - Premium Design
+
 
 
 // Feature: Theme Toggle
