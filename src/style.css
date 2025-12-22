@@ -679,17 +679,17 @@ h2 {
 
 @media (max-width: 600px) {
   .modal {
-    align-items: center;
-    /* Center execution context */
+    align-items: flex-start;
+    /* Align to top */
     padding: 0;
   }
 
   .modal-content {
     width: 100%;
     max-width: 100%;
-    height: 100%;
-    /* Full height */
-    max-height: 100%;
+    height: 100dvh;
+    /* Use dynamic viewport height */
+    max-height: 100dvh;
     border-radius: 0;
     /* Remove corners */
     margin: 0;
@@ -700,11 +700,22 @@ h2 {
     /* Simple fade in for full screen */
   }
 
+  .modal-header {
+    /* Add padding for status bar/notch */
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: 1rem;
+    background: var(--color-surface);
+    /* Ensure header isn't transparent */
+    position: relative;
+    z-index: 10;
+  }
+
   .modal-body {
     flex: 1;
     /* Ensure body takes available space */
-    padding-bottom: 2rem;
-    /* Add padding for bottom navigation bars */
+    overflow-y: auto;
+    /* Add padding for bottom chin/home indicator */
+    padding-bottom: max(2rem, env(safe-area-inset-bottom));
   }
 
   @keyframes slideUpMobile {
