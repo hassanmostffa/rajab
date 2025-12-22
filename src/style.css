@@ -701,9 +701,11 @@ h2 {
   }
 
   .modal-header {
-    /* Add padding for status bar/notch */
+    /* Add padding for status bar/notch and curved edges */
     padding-top: max(1rem, env(safe-area-inset-top));
     padding-bottom: 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
     background: var(--color-surface);
     /* Ensure header isn't transparent */
     position: relative;
@@ -714,8 +716,10 @@ h2 {
     flex: 1;
     /* Ensure body takes available space */
     overflow-y: auto;
-    /* Add padding for bottom chin/home indicator */
+    /* Add padding for bottom chin and sides */
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
 
   @keyframes slideUpMobile {
