@@ -686,14 +686,13 @@ h2 {
   .modal-content {
     width: 100%;
     max-width: 100%;
-    max-height: 75vh;
-    /* Reduced further for safety */
+    max-height: 85vh;
+    /* Leave space at top */
     border-radius: 20px 20px 0 0;
+    /* Round top corners only */
     margin: 0;
     border-bottom: none;
     animation: slideUpMobile 0.3s ease-out;
-    padding-bottom: env(safe-area-inset-bottom);
-    /* Safe area */
   }
 
   @keyframes slideUpMobile {
@@ -710,8 +709,6 @@ h2 {
 
   .modal-body {
     padding: 1rem;
-    padding-bottom: 2rem;
-    /* Extra padding */
   }
 
   .arabic-text {
@@ -727,21 +724,7 @@ h2 {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--color-border);
   background: rgba(0, 0, 0, 0.1);
-  width: 100%;
-  /* Ensure full width */
-  flex-shrink: 0;
-  /* Prevent header from shrinking */
 }
-
-.modal-actions {
-  display: flex;
-  gap: 0.8rem;
-  align-items: center;
-  flex-shrink: 0;
-  /* Important: Keep buttons visible */
-}
-
-
 
 .modal-header h2 {
   margin: 0;
