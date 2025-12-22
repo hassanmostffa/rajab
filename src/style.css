@@ -679,20 +679,32 @@ h2 {
 
 @media (max-width: 600px) {
   .modal {
-    align-items: flex-end;
-    /* Bottom sheet style */
+    align-items: center;
+    /* Center execution context */
+    padding: 0;
   }
 
   .modal-content {
     width: 100%;
     max-width: 100%;
-    max-height: 85vh;
-    /* Leave space at top */
-    border-radius: 20px 20px 0 0;
-    /* Round top corners only */
+    height: 100%;
+    /* Full height */
+    max-height: 100%;
+    border-radius: 0;
+    /* Remove corners */
     margin: 0;
-    border-bottom: none;
-    animation: slideUpMobile 0.3s ease-out;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.2s ease-out;
+    /* Simple fade in for full screen */
+  }
+
+  .modal-body {
+    flex: 1;
+    /* Ensure body takes available space */
+    padding-bottom: 2rem;
+    /* Add padding for bottom navigation bars */
   }
 
   @keyframes slideUpMobile {
