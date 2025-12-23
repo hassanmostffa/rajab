@@ -765,4 +765,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initAbout();
   initNavigation();
 
+
+  console.log("Rajab App Loaded - v2.0 (Fix Applied)");
 });
