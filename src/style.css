@@ -179,6 +179,23 @@ body {
   text-decoration: none;
   font-size: 1.2rem;
   border-bottom: 1px dashed var(--color-gold);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.contact-link:hover {
+  background-color: rgba(255, 215, 0, 0.1);
+  padding: 0 0.5rem;
+  border-radius: 4px;
+  border-bottom-style: solid;
+}
+
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  align-items: center;
 }
 
 .modal-actions {
