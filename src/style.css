@@ -68,8 +68,8 @@ body {
   }
 
   .sidebar {
-    order: -1;
-    /* Show sidebar on top or maybe keep it below? Let's keep normally but maybe collapsible? For now just stacked. */
+    order: 1;
+    margin-top: 2rem;
   }
 }
 
