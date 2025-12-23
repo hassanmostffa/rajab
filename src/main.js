@@ -56,13 +56,13 @@ const appData = {
       "title": "ولادة عبد الله الرضيع ابن الامام الحسين عليه السلام ",
     },
     {
-    "day": 10,
+      "day": 10,
       "date": "العاشر من رجب",
       "title": "ولادة الإمام محمد الجواد (عليه السلام)، الإمام التاسع من أئمة أهل البيت (عليهم السلام)",
     },
     {
-    "day": 12,
-      "date":  "الثاني عشر من رجب",
+      "day": 12,
+      "date": "الثاني عشر من رجب",
       "title": "وفاة العباس بن عبد المطلب، عم النبي (صلى الله عليه وآله)",
     },
     {
@@ -651,10 +651,112 @@ function updateToggleIcon(theme) {
   }
 }
 
+// Feature: Dynamic Backgrounds based on Occasion
+function initDynamicBackground() {
+  const hijri = getHijriDate();
+  const day = hijri.day;
+  const month = hijri.month;
+
+  // Only apply in Rajab (Month 7)
+  if (month !== 7) return;
+
+  const html = document.documentElement;
+
+  // Reset special themes first
+  html.classList.remove('theme-raghaib', 'theme-13-rajab');
+
+  // 1. Laylat al-Raghaib (First Thursday Night of Rajab)
+  // Logic: It's the night preceding the first Friday.
+  // Approximation: If today is Thursday and day is <= 7 (First week)
+  const today = new Date();
+  const isThursday = today.getDay() === 4; // 0=Sun, 1=Mon... 4=Thu
+
+  // NOTE: This is an approximation. Ideally we sync accurate Hijri calculation.
+  // For demo: If day is between 1-6 and it's Thursday Night
+  if (day >= 1 && day <= 7 && isThursday) {
+    html.classList.add('theme-raghaib');
+    console.log('Applied Theme: Laylat al-Raghaib (Starry Night)');
+  }
+
+  // 2. 13th Rajab (Birth of Imam Ali a.s) - Gold Theme
+  if (day === 13) {
+    html.classList.add('theme-13-rajab');
+    console.log('Applied Theme: 13th Rajab (Golden Festive)');
+  }
+}
+
+// Feature: Daily Grace Notification
+function initDailyGrace() {
+  const modal = document.getElementById('daily-grace-modal');
+  const closeBtn = document.getElementById('close-grace-modal');
+  const actionBtn = document.getElementById('grace-action-btn');
+  const titleEl = document.getElementById('grace-title');
+  const msgEl = document.getElementById('grace-message');
+
+  if (!modal || !appData) return;
+
+  const hijri = getHijriDate();
+
+  // Find occasion for today
+  const occasion = appData.special_occasions.find(o => o.day === hijri.day);
+  const extraDua = appData.extended_content.prominent_duas.find(d => d.day === hijri.day);
+
+  let graceTitle = '';
+  let graceMsg = '';
+  let targetDay = hijri.day;
+
+  // Priority: Occasion > Prominent Dua
+  if (occasion) {
+    graceTitle = occasion.title;
+    graceMsg = `اليوم هو مناسبة عظيمة. اغتنم الفرصة للتقرب إلى الله بالأعمال المستحبة.`;
+  } else if (extraDua) {
+    graceTitle = extraDua.title;
+    graceMsg = `في هذا اليوم عمل مستحب عظيم. لا تفوت فرصة نيل الثواب.`;
+  } else if (hijri.day === 1) { // Fallback for Day 1 if not in list
+    graceTitle = "الأول من رجب";
+    graceMsg = "مبارك عليكم حلول شهر الله الأصَب. استهله بالدعاء والاستغفار.";
+  }
+
+  // Show Modal if there is something relevant
+  if (graceTitle && !sessionStorage.getItem(`grace_shown_${hijri.day}`)) {
+    titleEl.textContent = graceTitle;
+    msgEl.textContent = graceMsg;
+
+    // Show after slight delay for effect
+    setTimeout(() => {
+      modal.classList.remove('hidden');
+    }, 1500);
+
+    // Save state to avoid spamming on reload (Optional, user said 'Upon page load' so maybe every time? 
+    // Let's stick to session to be nice, clears on tab close)
+    sessionStorage.setItem(`grace_shown_${hijri.day}`, 'true');
+  }
+
+  // Event Listeners
+  const closeModal = () => modal.classList.add('hidden');
+
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+  if (actionBtn) {
+    actionBtn.addEventListener('click', () => {
+      closeModal();
+      // Navigate to home view
+      const homeBtn = document.querySelector('.nav-btn[data-target="home"]');
+      if (homeBtn) homeBtn.click();
+
+      // Select the day in calendar
+      const dayCell = document.querySelector(`.calendar-day[data-day="${targetDay}"]`);
+      if (dayCell) dayCell.click();
+    });
+  }
+}
+
 // Initialize Features
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Rajab App Initialized - v1.4 Fixed');
   initTheme();
+  initDynamicBackground();
+  initDailyGrace();
   initDeedOfTheDay();
   initDuas();
   initTasbih();

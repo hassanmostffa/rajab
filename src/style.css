@@ -1030,3 +1030,163 @@ h2 {
     overflow-x: hidden;
   }
 }
+
+/* =========================================
+   Dynamic Occasion Themes
+   ========================================= */
+
+/* 1. Starry Night Theme (Laylat al-Raghaib) */
+.theme-raghaib body {
+  background: linear-gradient(to bottom, #000428, #004e92);
+  color: #fff;
+}
+
+.theme-raghaib .card {
+  background-color: rgba(0, 4, 40, 0.8);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.theme-raghaib .app-header h1,
+.theme-raghaib h2,
+.theme-raghaib .gold-text {
+  color: #aebcc4;
+  /* Silvery moonlight color instead of gold */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* 2. Festive Gold Theme (13th Rajab - Birth of Imam Ali a.s) */
+.theme-13-rajab body {
+  background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+  color: #5e4a00;
+  /* Darker text for contrast on bright bg */
+}
+
+.theme-13-rajab .card {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: #B8860B;
+  box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+}
+
+.theme-13-rajab h1,
+.theme-13-rajab h2,
+.theme-13-rajab .nav-btn.active {
+  color: #8B4513;
+  /* SaddleBrown for strong contrast */
+  text-shadow: none;
+}
+
+.theme-13-rajab .subtitle,
+.theme-13-rajab .nav-btn,
+.theme-13-rajab .calendar-day {
+  color: #5e4a00;
+  border-color: rgba(139, 69, 19, 0.2);
+}
+
+.theme-13-rajab .nav-btn:hover {
+  background-color: rgba(255, 215, 0, 0.5);
+  color: #000;
+}
+
+/* =========================================
+   Daily Grace Notification Modal
+   ========================================= */
+.grace-content {
+  background: linear-gradient(135deg, #FFD700 0%, #FDB931 30%, #9f7928 100%);
+  background-size: cover;
+  position: relative;
+  border: 4px solid #fff;
+  box-shadow: 0 0 50px rgba(255, 215, 0, 0.6);
+  color: #5e4a00;
+  text-align: center;
+  max-width: 450px !important;
+  overflow: hidden;
+}
+
+/* Pattern Overlay */
+.grace-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(#fff 15%, transparent 16%),
+    radial-gradient(#fff 15%, transparent 16%);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.grace-header {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  /* RTL aware closer */
+  z-index: 10;
+}
+
+.grace-header .close-btn {
+  color: #5e4a00;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.grace-body {
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 5;
+}
+
+.grace-icon {
+  font-size: 4rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+  animation: float 3s ease-in-out infinite;
+}
+
+.grace-title {
+  font-size: 1.8rem;
+  color: #3d3000;
+  border-bottom: 2px solid rgba(94, 74, 0, 0.3);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.grace-message {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #4a3b00;
+  font-weight: 500;
+}
+
+.grace-btn {
+  background: #fff;
+  color: #9f7928;
+  margin-top: 1rem;
+  border: 2px solid #5e4a00;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.grace-btn:hover {
+  background: #5e4a00;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
