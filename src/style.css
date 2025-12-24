@@ -1,13 +1,16 @@
 :root {
-  /* Dark Theme (Default) */
+  /* Dark Theme (Default) - Enhanced Readability */
   --color-primary: #001f3f;
   --color-secondary: #003366;
   --color-gold: #FFD700;
   --color-gold-hover: #E6C200;
-  --color-text: #F0F4F8;
-  --color-text-muted: #B0B8C4;
-  --color-background: #001224;
-  --color-card-bg: rgba(0, 31, 63, 0.8);
+  --color-text: #e6f1ff;
+  /* Clear off-white for better contrast */
+  --color-text-muted: #a8b2d1;
+  --color-background: #020c1b;
+  /* Deep matte navy */
+  --color-card-bg: rgba(17, 34, 64, 0.95);
+  /* High opacity for legibility */
   --color-border: rgba(255, 215, 0, 0.3);
 
   /* Typography */
@@ -15,17 +18,20 @@
 }
 
 [data-theme="light"] {
-  /* Light Theme */
+  /* Light Theme - High Contrast */
   --color-primary: #f0f4f8;
   --color-secondary: #ffffff;
-  --color-gold: #b38f00;
+  --color-gold: #b8860b;
+  /* Dark Goldenrod for visibility on white */
   /* Darker gold for light bg */
-  --color-gold-hover: #997a00;
-  --color-text: #001f3f;
-  --color-text-muted: #556677;
-  --color-background: #f4f6f9;
+  --color-gold-hover: #997000;
+  --color-text: #2c3e50;
+  /* Dark Blue-Gray for sharp text */
+  --color-text-muted: #5e6c7e;
+  --color-background: #f8f9fa;
+  /* Soft gray-white */
   --color-card-bg: #ffffff;
-  --color-border: rgba(179, 143, 0, 0.3);
+  --color-border: rgba(184, 134, 11, 0.3);
 }
 
 * {
@@ -1126,7 +1132,7 @@ h2 {
 
 /* =========================================
    Dynamic Occasion Themes
-   ========================================= */
+   ======================================= */
 
 /* 1. Starry Night Theme (Laylat al-Raghaib) */
 .theme-raghaib body {
