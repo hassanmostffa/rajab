@@ -85,6 +85,8 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
   transition: background-color 0.3s ease, border-color 0.3s ease;
+  word-wrap: break-word;
+  /* Prevent overflow from long words */
 }
 
 .app-header {
@@ -267,36 +269,43 @@ body {
 
   .calendar-grid {
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    /* Force shrinking */
-    gap: 2px;
+    gap: 3px;
+    /* Optimized gap */
     margin-bottom: 0.5rem;
     width: 100%;
+    display: grid;
   }
 
-  /* Ensure containers don't overflow */
+  /* Ensure containers don't overflow - Explicit User Fixes */
   .layout-container,
   .sidebar,
   .main-content {
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding-left: 10px !important;
+    /* Adjusted safe padding */
+    padding-right: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .card {
+    width: 100% !important;
+    padding: 1rem;
+    word-wrap: break-word;
   }
 
   .calendar-day {
-    font-size: 11px;
-    /* Fixed small size for predictability */
+    font-size: 0.75rem;
     border-radius: 4px;
     padding: 0;
-    /* Remove internal padding */
     height: auto;
-    /* Allow aspect ratio to control height */
     aspect-ratio: 1;
-    min-width: 0;
-    /* Allow shrinking */
+    min-width: 0 !important;
+    /* User request */
   }
 
   .dua-item .arabic {
-    font-size: 22px;
-    /* Smaller arabic text on mobile to prevent overflow */
+    font-size: 20px;
     line-height: 1.8;
   }
 }
