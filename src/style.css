@@ -266,9 +266,19 @@ body {
   }
 
   .calendar-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    /* Force shrinking */
     gap: 2px;
-    /* Ultra tight for mobile */
     margin-bottom: 0.5rem;
+    width: 100%;
+  }
+
+  /* Ensure containers don't overflow */
+  .layout-container,
+  .sidebar,
+  .main-content {
+    width: 100%;
+    max-width: 100%;
   }
 
   .calendar-day {
