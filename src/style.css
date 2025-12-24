@@ -252,7 +252,8 @@ body {
   /* Mobile Layout Fixes */
   #app {
     padding: 0.5rem;
-    overflow-x: hidden; /* Double safety */
+    overflow-x: hidden;
+    /* Double safety */
   }
 
   .layout-container {
@@ -260,21 +261,33 @@ body {
   }
 
   .card {
-    padding: 1rem; /* Reduce padding on mobile cards */
+    padding: 1rem;
+    /* Reduce padding on mobile cards */
   }
 
   .calendar-grid {
-    gap: 0.2rem; /* Reduce gap for 7-col grid */
+    gap: 2px;
+    /* Ultra tight for mobile */
+    margin-bottom: 0.5rem;
   }
 
   .calendar-day {
-    font-size: 0.8rem; /* Smaller font for dates */
-    border-radius: 4px; /* Slightly sharper corners to save visual space */
+    font-size: 11px;
+    /* Fixed small size for predictability */
+    border-radius: 4px;
+    padding: 0;
+    /* Remove internal padding */
+    height: auto;
+    /* Allow aspect ratio to control height */
+    aspect-ratio: 1;
+    min-width: 0;
+    /* Allow shrinking */
   }
-  
+
   .dua-item .arabic {
-     font-size: 22px; /* Smaller arabic text on mobile to prevent overflow */
-     line-height: 1.8;
+    font-size: 22px;
+    /* Smaller arabic text on mobile to prevent overflow */
+    line-height: 1.8;
   }
 }
 
