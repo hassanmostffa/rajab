@@ -42,6 +42,7 @@ body {
   direction: rtl;
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
 }
 
 #app {
@@ -246,6 +247,34 @@ body {
 
   .app-header {
     padding: 1rem 0;
+  }
+
+  /* Mobile Layout Fixes */
+  #app {
+    padding: 0.5rem;
+    overflow-x: hidden; /* Double safety */
+  }
+
+  .layout-container {
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1rem; /* Reduce padding on mobile cards */
+  }
+
+  .calendar-grid {
+    gap: 0.2rem; /* Reduce gap for 7-col grid */
+  }
+
+  .calendar-day {
+    font-size: 0.8rem; /* Smaller font for dates */
+    border-radius: 4px; /* Slightly sharper corners to save visual space */
+  }
+  
+  .dua-item .arabic {
+     font-size: 22px; /* Smaller arabic text on mobile to prevent overflow */
+     line-height: 1.8;
   }
 }
 
