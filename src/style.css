@@ -27,6 +27,16 @@
   padding: 2rem;
 }
 
+[data-theme="light"] .welcome-section {
+  background-color: #ffffff;
+  color: #0a1931;
+  border-color: #b8860b;
+}
+
+[data-theme="light"] .welcome-section p {
+  color: #2c3e50;
+}
+
 .welcome-section h2 {
   font-family: 'Amiri', serif;
   font-size: 2rem;
@@ -42,20 +52,52 @@
 }
 
 [data-theme="light"] {
-  /* Light Theme - High Contrast */
-  --color-primary: #f0f4f8;
-  --color-secondary: #ffffff;
-  --color-gold: #b8860b;
-  /* Dark Goldenrod for visibility on white */
-  /* Darker gold for light bg */
+  /* Light Theme - High Contrast & Premium */
+  --color-primary: #0A1931;
+  /* Very Dark Navy */
+  --color-secondary: #FFFFFF;
+  --color-gold: #B8860B;
+  /* Deep Gold for readability */
   --color-gold-hover: #997000;
-  --color-text: #2c3e50;
-  /* Dark Blue-Gray for sharp text */
-  --color-text-muted: #5e6c7e;
+  --color-text: #0A1931;
+  /* Matching Dark Navy */
+  --color-text-muted: #2c3e50;
   --color-background: #f8f9fa;
-  /* Soft gray-white */
-  --color-card-bg: #ffffff;
-  --color-border: rgba(184, 134, 11, 0.3);
+  /* Requested #f8f9fa */
+  --color-card-bg: #FFFFFF;
+  --color-border: #e0e0e0;
+  /* Requested distinct lighter border for general cards */
+}
+
+/* Specific Light Mode Overrides */
+[data-theme="light"] .card,
+[data-theme="light"] .virtue-card {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  color: #0a1931;
+}
+
+[data-theme="light"] h2,
+[data-theme="light"] .section-title {
+  color: #b8860b;
+  text-shadow: none;
+}
+
+[data-theme="light"] .calendar-day {
+  background-color: #ffffff;
+  border: 1px solid #d4af37;
+  color: #0a1931;
+}
+
+[data-theme="light"] .calendar-day:hover {
+  background-color: #f0f0f0;
+}
+
+[data-theme="light"] .btn-primary,
+[data-theme="light"] .calendar-btn {
+  background-color: #0a1931;
+  color: #ffffff;
 }
 
 * {
@@ -853,7 +895,7 @@ h2 {
 .modal-content {
   background: var(--color-surface);
   /* Fallback or specific color */
-  background: linear-gradient(135deg, var(--color-background), var(--color-surface, #001f3f));
+  background: linear-gradient(135deg, var(--color-background), var(--color-surface, #bfcad428));
   border: 2px solid var(--color-gold);
   border-radius: 16px;
   width: 90%;
