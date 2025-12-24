@@ -1,6 +1,7 @@
 // Main application entry point
 import './style.css'
 import { duasContent } from './content.js';
+import virtuesData from './virtues.json';
 
 // Data populated from user JSON
 const appData = {
@@ -763,8 +764,25 @@ document.addEventListener('DOMContentLoaded', () => {
   initDates();
   initWhiteDays();
   initAbout();
+  initVirtues();
   initNavigation();
-
-
-  console.log("Rajab App Loaded - v2.0 (Fix Applied)");
 });
+
+// Feature: Virtues Tab
+// Feature: Virtues Tab
+
+function initVirtues() {
+  const container = document.getElementById('virtues-grid');
+  if (!container) return;
+
+  container.innerHTML = virtuesData.map(virtue => `
+    <div class="virtue-card">
+      <span class="virtue-source">${virtue.source}</span>
+      <p class="virtue-text">${virtue.text}</p>
+    </div>
+  `).join('');
+}
+
+
+console.log("Rajab App Loaded - v2.0 (Fix Applied)");
+
