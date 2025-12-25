@@ -34,7 +34,7 @@
 }
 
 [data-theme="light"] .welcome-section p {
-  color: #2c3e50;
+  color: #0A1931;
 }
 
 .welcome-section h2 {
@@ -57,16 +57,15 @@
   /* Very Dark Navy */
   --color-secondary: #FFFFFF;
   --color-gold: #B8860B;
-  /* Deep Gold for readability */
+  /* Deep Gold */
   --color-gold-hover: #997000;
   --color-text: #0A1931;
-  /* Matching Dark Navy */
-  --color-text-muted: #2c3e50;
-  --color-background: #f8f9fa;
-  /* Requested #f8f9fa */
+  /* Very Dark Navy for Text */
+  --color-text-muted: #0A1931;
+  --color-background: #fdfaf6;
+  /* Requested Warm White */
   --color-card-bg: #FFFFFF;
   --color-border: #e0e0e0;
-  /* Requested distinct lighter border for general cards */
 }
 
 /* Specific Light Mode Overrides */
