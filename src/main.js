@@ -256,7 +256,8 @@ function initDuas() {
         daily_adhkar: { title: "📿 أذكار يومية", items: [] },
         daily_duas: { title: "🤲 أدعية يومية", items: [] },
         ziyarat: { title: "🕌 زيارات", items: [] },
-        special_occasions: { title: "🗓️ مناسبات خاصة", items: [] }
+        special_occasions: { title: "🗓️ مناسبات خاصة", items: [] },
+        short_surahs: { title: "📖 السور القصيرة", items: [] }
       };
 
       // Populate categories
