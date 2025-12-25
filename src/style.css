@@ -62,7 +62,7 @@
   --color-text: #0A1931;
   /* Very Dark Navy for Text */
   --color-text-muted: #0A1931;
-  --color-background: #fdfaf6;
+  --color-background: #fdfaf6 !important;
   /* Requested Warm White */
   --color-card-bg: #FFFFFF;
   --color-border: #e0e0e0;
